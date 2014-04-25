@@ -122,6 +122,6 @@ char* __default_alloc_template<__threads, __inst>::_S_chunk_alloc(size_t __size,
 
 _S_chunk_alloc函数以end_free 和 start_free指针来判定内存池是否还有足够的内存。假如程序开始运行的时候，客户调用_S_chunk_alloc(32,20)，于是分配了20*2个32bytes的内存块，其中前20给客户使用，返回第一个块的地址，其余就交给free-list[3]来维护，还有20个块就留在内存池维护。接下来客户又调用_S_chunk_alloc(62,20),内存池中还剩下20个32bytes大小的块，换算就是10个64bytes块，于是就将这10个给客户使用，返回第一个块的地址，其余就交给free-list[7]维护。接着又调用_S_chunk_alloc(96,20)，先去free-list中找找有没有内存，但是fee-list[11]没啥东西，那就找_S_chunk_alloc求救，但是池中也没有内存了，那就分配内存吧，于是alloc了40个96 bytes块，将20个块给客户使用，返回第一块的地址，其余的交给free-list[11]维护，剩下的20个96 bytes块继续留在内存池中，等待下一次的内存分配。
 下图是第二层配置器的大致工作动向：  
-![alt text](/imag/2013-04-22-1.jpg)  
+![alt text](/img/2013-04-22-1.jpg)  
 
 至此，第二层配置器的神秘面纱被揭开，大致清楚了内存的配置。
