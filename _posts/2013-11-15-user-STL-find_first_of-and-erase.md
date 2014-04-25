@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "STL中可能误用的 find_first_of 和 earse "
-categories: general
+categories: c++
 ---
 
 ####string中find_first_of的误用
