@@ -50,6 +50,7 @@ static int CPlusPlus_Add(lua_State* lua)
 ```
 
 说明：  
+
 * ```lua_gettop(lua);```返回当前栈内的元素个数，在lua中，每一次的调用都会有一个独立的栈，它独立于lua也独立于C。  
 * ```lua_isnumber(lua, i);```检测栈内i位置的元素是否为number类型。  
 * ```lua_tointeger(lua, i);```将栈内i位置的元素转换成int类型并且出栈i位置的元素。
@@ -65,9 +66,10 @@ lua_pcall(Lua, 2, 1, 0);
 ```
 
 说明：  
+
 * ```lua_getglobal(Lua, "add");```获取lua中全局变量add，add将放在栈顶
 * ```lua_pushinteger(Lua, 6);```将6值入栈
-* ```lua_pushinteger(Lua, 5);```将5值入栈
+* ```lua_pushinteger(Lua, 5);```将5值入栈  
 * ```lua_pcall(Lua, 2, 1, 0);```调用栈顶的函数，说明有2个参数1个返回值，最后一个值表示出错时是否catch。
 
 lua脚本中：
