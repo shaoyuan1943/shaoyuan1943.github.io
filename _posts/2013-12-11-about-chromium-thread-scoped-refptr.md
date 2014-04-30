@@ -90,8 +90,11 @@ private:
 typedef int32 Atomic32;  
 typedef int64_t Atomic64;  
 typedef intptr_t Atomic64;  
+```
+
 在src/base/atomic_ref_count.h文件中：
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
+
+``` c++
 typedef subtle::Atomic32 AtomicRefCount;  
 ```
 
@@ -148,7 +151,6 @@ RefCountedBase只是在Release中实现了-1，在RefCounted里面Release则是d
 ``` c++
 // Forward declaration.  
 template <class T, typename Traits> class RefCountedThreadSafe;  
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
 // Default traits for RefCountedThreadSafe<T>.  Deletes the object when its ref  
 // count reaches 0.  Overload to delete it on a different thread etc.  
 template<typename T>  
@@ -162,7 +164,6 @@ struct DefaultRefCountedThreadSafeTraits
       RefCountedThreadSafe<T,DefaultRefCountedThreadSafeTraits>::DeleteInternal(x);  
     }  
 };  
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
 //  
 // A thread-safe variant of RefCounted<T>  
 //  
@@ -180,12 +181,10 @@ class RefCountedThreadSafe : public subtle::RefCountedThreadSafeBase
 {  
 public:  
     RefCountedThreadSafe() {}  
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
     void AddRef() const   
     {  
       subtle::RefCountedThreadSafeBase::AddRef();  
     }  
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
     void Release() const   
     {  
         if (subtle::RefCountedThreadSafeBase::Release())   
@@ -193,14 +192,11 @@ public:
             Traits::Destruct(static_cast<const T*>(this));  
         }  
     }  
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
 protected:  
     ~RefCountedThreadSafe() {}  
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
 private:  
     friend struct DefaultRefCountedThreadSafeTraits<T>;  
     static void DeleteInternal(const T* x) { delete x; }  
-[cpp] view plaincopyprint?在CODE上查看代码片派生到我的代码片
     DISALLOW_COPY_AND_ASSIGN(RefCountedThreadSafe);  
 };  
 ```
