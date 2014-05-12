@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "理解lua中的```_G```"
+title: "理解lua中的_G"
 categories: lua
 ---
 
