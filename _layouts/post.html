@@ -5,7 +5,7 @@ layout: default
 <link rel="stylesheet" href="/css/pygments.css">
 
 <h2>{{ page.title }}</h2>
-<span class="meta">{{ page.date | date_to_string }}</span>
+<span class="meta">{{ page.date | date: "%Y-%m-%d" }}</span>
 
 {% for category in page.categories %}<span class="category">{{category}}</span>{% endfor %}
 
