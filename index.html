@@ -9,7 +9,7 @@ title: 多读书，要读好书
     {% for post in site.posts %}
     <li>
       <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-      <span class="right">{{ post.date | date_to_string }}</span>
+      <span class="right">{{ post.date | date: "%Y-%m-%d" }}</span>
       <div class="clear" />
     </li>
     {% endfor %}
