@@ -4,16 +4,16 @@ title: "skynet中upvalue的用法"
 categories: lua
 ---
 
-今天花了几十分钟看了一下skynet中自带的```lua-clientsocket.c```文件，其实在实际项目中，这一部分代码是需要重写的，所以也就大致看了一下流程。仔细看了这个文件中的```lreadline```，这个函数的实现比较巧妙，主要涉及到lua中的```upvalue```，之前还没有接触到```upvalue```，就当学习了一下```upvalue```的用法。
+今天花了几十分钟看了一下skynet中的```lua-clientsocket.c```文件，其实在实际项目中，这一部分代码是需要重写的，所以也就大致看了一下流程。仔细看了这个文件中的```lreadline```，这个函数的实现比较巧妙，主要涉及到lua中的```upvalue```，之前还没有接触到```upvalue```，就当学习了一下```upvalue```的用法。
 
-在客户端，是这么调用:  
+在客户端，是这么调用:
 
 ``` lua
 local socket = require("clientsocket");
 socket.readline();
 ```
 
-先看下```luaopen_clientsocket```的源代码：  
+先看下```luaopen_clientsocket```的源代码：
 
 ``` c++
 int luaopen_clientsocket(lua_State *L) 
@@ -42,7 +42,7 @@ int luaopen_clientsocket(lua_State *L)
 }
 ```
 
-在上面的函数，首先将几个函数加入了lua虚拟机中。注意，```lreadline```并没有添加进去，而是在后面单独做了处理。```lua_newuserdata```首先申请内存返回一个```struct queue```指针。然后将一个C函数作为```closure```压入栈中，接下来:  
+在上面的函数，首先将几个函数加入了lua虚拟机中。注意，```lreadline```并没有添加进去，而是在后面单独做了处理。```lua_newuserdata```首先申请内存返回一个```struct queue```指针。然后将一个C函数作为```closure```压入栈中，接下来:
 
 ``` lua
 tb["readline"] = lreadline;
