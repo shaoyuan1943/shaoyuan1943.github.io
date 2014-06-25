@@ -75,9 +75,9 @@ static int lreadline(lua_State *L)
 }
 ```
 
-```lua_upvalueindex```返回了函数环境中index为1的```upvalue```。然后对返回的```upvalue```进行操作。
+上面```lua_upvalueindex```返回了函数环境中index为1的```upvalue```。然后对返回的```upvalue```进行操作。
 
-```luaopen_clientsocket```只是创建了一个没有内容的```struct queue，*q```中的内容从哪里来呢。在```readline_stdin```线程中，会去读取console上的内容放在```*q```中，上面说了```upvalue```针对的是值而不是“引用”，因为我们在lua中可以通过```socket.readline```读取到内容。
+而```luaopen_clientsocket```只是创建了一个没有内容的```struct queue，*q```中的内容从哪里来呢。在```readline_stdin```线程中，会去读取console上的内容放在```*q```中，上面说了```upvalue```针对的是值而不是“引用”，因为我们在lua中可以通过```socket.readline```读取到内容。
 
 这里利用到了lua中的```upvalue```。在lua中，函数有自己的上下文环境，特别是```closure```，当执行一个```closure```的时候lua虚拟机会创建一个新的```data object```，它包含了相应函数原型的引用，环境的引用以及一个由所有```upvalue```组成的```table```，这些```upvalue```只对这个```closure```可见。
 
