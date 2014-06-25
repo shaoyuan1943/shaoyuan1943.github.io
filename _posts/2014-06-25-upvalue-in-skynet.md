@@ -55,7 +55,7 @@ tb["readline"] = lreadline;
 ``` c++
 static int lreadline(lua_State *L) 
 {
-	 // 找到了在luaopen_clientsocket中push到栈中的struct queue * q
+	 // 找到了在luaopen_clientsocket中push到栈中的struct queue* q
 	 struct queue *q = lua_touserdata(L, lua_upvalueindex(1));
 	 LOCK(q);
 	 if (q->head == q->tail) 
@@ -93,6 +93,6 @@ local c1 = f1(1943);
 c1(); -- 1953
 ```
 
-在上面的代码中，```c1 closure```可见n变量，在f1返回时n即将被gc的时候，由于此时```c1 closure```会引用到n，所以lua会将n作为一个```upvalue```存在c1的```data object```中，这也就是```c1();```时不会报错并且打印出1953.
+在上面的代码中，```c1``` ```closure```可见n变量，在f1返回时n即将被gc的时候，由于此时```c1 ``` ```closure```会引用到n，所以lua会将n作为一个```upvalue```存在c1的```dataobject```中，这也就是```c1()```时不会报错并且打印出1953.
 
 通过上面就可以知道，```upvalue```可以实现数据共享的机制。即在多个```closure```下，在不使用全局变量或者静态变量的情况下实现数据共享。```skynet中lreadline```的实现就是如此。先将```*q```作为```upvalue push```到```lreadline```函数中，然后在线程中修改```*q```，当调用```lreadline```时直接将```*q```中的内容返回给lua。在没有使用全局变量和静态变量的情况下实现了数据共享，真是巧妙啊，云风果然是厉害。
