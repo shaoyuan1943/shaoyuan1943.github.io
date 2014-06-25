@@ -48,6 +48,30 @@ int luaopen_clientsocket(lua_State *L)
 tb["readline"] = lreadline;
 ```
 
-这样使得我们可以在lua中直接使用```socket.readline()```.
+这样使得我们可以在lua中直接使用```socket.readline()```。
 
-```lua_newuserdata```会将已经创建的内存块压入堆栈，然后```lua_pushcclosure```，这里的巧妙就是将创建的```*q```作为一个```upvalue```设置到```lreadline```函数内部，```upvalue```针对的是值，也就是说```lua_pushcclosure```直接将内存块当成了```lreadline```的```upvalue```，而不是```q```，```q```只是作为一个指针引用```*q```存在的。
+在上面的代码中```lua_newuserdata```会将已经创建的内存块压入堆栈，然后```lua_pushcclosure```，这里的巧妙就是将创建的```*q```作为一个```upvalue```设置到```lreadline```函数内部，```upvalue```针对的是值，也就是说```lua_pushcclosure```直接将内存块当成了```lreadline```的```upvalue```，而不是```q```，```q```只是作为一个指针引用```*q```存在的。
+
+``` c++
+static int lreadline(lua_State *L) 
+{
+	 // 找到了在luaopen_clientsocket中push到栈中的struct queue * q
+	 struct queue *q = lua_touserdata(L, lua_upvalueindex(1));
+	 LOCK(q);
+	 if (q->head == q->tail) 
+	 {
+		  UNLOCK(q);
+		  return 0;
+	 }
+	 char * str = q->queue[q->head];
+	 if (++q->head >= QUEUE_SIZE) 
+	 {
+		  q->head = 0;
+	 }
+	 UNLOCK(q);
+	 lua_pushstring(L, str);
+	 free(str);
+	 return 1;
+}
+```
+
