@@ -42,7 +42,7 @@ int luaopen_clientsocket(lua_State *L)
 }
 ```
 
-在上面的函数，首先将几个函数加入了lua虚拟机中。注意，```lreadline```并没有添加进去，而是在后面单独做了处理。```lua_newuserdata```首先申请内存返回一个```struct queue```指针。然后将一个C函数作为```closure```压入栈中，接下来:  
+在上面的函数，首先将几个函数加入了lua虚拟机中。注意```lreadline```并没有添加进去，而是在后面单独做了处理。```lua_newuserdata```首先申请内存返回一个```struct``` ```queue```指针。然后将一个C函数作为```closure```压入栈中，接下来:  
 
 ``` lua
 tb["readline"] = lreadline;
