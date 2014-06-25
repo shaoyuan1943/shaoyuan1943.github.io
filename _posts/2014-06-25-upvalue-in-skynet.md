@@ -4,12 +4,12 @@ title: "skynet中upvalue的用法"
 categories: lua
 ---
 
-今天花了几十分钟看了一下skynet中自带的lua-clientsocket.c文件，其实在实际项目中，这一部分代码是需要重写的，所以也就大致看了一下流程。仔细看了这个文件中的lreadline，这个函数的实现比较巧妙，主要涉及到lua中的upvalue，之前还没有接触到upvalue，就当学习了一下upvalue的用法。
+今天花了几十分钟看了一下skynet中自带的```lua-clientsocket.c```文件，其实在实际项目中，这一部分代码是需要重写的，所以也就大致看了一下流程。仔细看了这个文件中的```lreadline```，这个函数的实现比较巧妙，主要涉及到lua中的```upvalue```，之前还没有接触到```upvalue```，就当学习了一下```upvalue```的用法。
 
 在客户端，是这么调用:  
 
 ``` lua
-local socket = require(“clientsocket”);
+local socket = require("clientsocket");
 socket.readline();
 ```
 
@@ -18,27 +18,27 @@ socket.readline();
 ``` c++
 int luaopen_clientsocket(lua_State *L) 
 {
-     luaL_checkversion(L);
-     luaL_Reg l[] = 
-     {
-          { "connect", lconnect },
-          { "recv", lrecv },
-          { "send", lsend },
-          { "close", lclose },
-          { "usleep", lusleep },
-          { NULL, NULL },
-     };
-     luaL_newlib(L, l);
+	 luaL_checkversion(L);
+	 luaL_Reg l[] = 
+	 {
+		  { "connect", lconnect },
+		  { "recv", lrecv },
+		  { "send", lsend },
+		  { "close", lclose },
+		  { "usleep", lusleep },
+		  { NULL, NULL },
+	 };
+	 luaL_newlib(L, l);
 
-     struct queue * q = lua_newuserdata(L, sizeof(*q));
-     memset(q, 0, sizeof(*q));
-     lua_pushcclosure(L, lreadline, 1); //说明lreadline函数内部只有一个upvalue值
-     lua_setfield(L, -2, "readline");  // socket.readline = lreadline;
+	 struct queue * q = lua_newuserdata(L, sizeof(*q));
+	 memset(q, 0, sizeof(*q));
+	 lua_pushcclosure(L, lreadline, 1); //说明lreadline函数内部只有一个upvalue值
+	 lua_setfield(L, -2, "readline");  // socket.readline = lreadline
 
-     pthread_t pid ;
-     pthread_create(&pid, NULL, readline_stdin, q);
+	 pthread_t pid ;
+	 pthread_create(&pid, NULL, readline_stdin, q);
 
-     return 1;
+	return 1;
 }
 ```
 
@@ -55,23 +55,23 @@ tb["readline"] = lreadline;
 ``` c++
 static int lreadline(lua_State *L) 
 {
-     // 找到了在luaopen_clientsocket中push到栈中的struct queue * q
-     struct queue *q = lua_touserdata(L, lua_upvalueindex(1));
-     LOCK(q);
-     if (q->head == q->tail) 
+	 // 找到了在luaopen_clientsocket中push到栈中的struct queue * q
+	 struct queue *q = lua_touserdata(L, lua_upvalueindex(1));
+	 LOCK(q);
+	 if (q->head == q->tail) 
 	 {
-          UNLOCK(q);
-          return 0;
-     }
-     char * str = q->queue[q->head];
-     if (++q->head >= QUEUE_SIZE) 
+		  UNLOCK(q);
+		  return 0;
+	 }
+	 char * str = q->queue[q->head];
+	 if (++q->head >= QUEUE_SIZE) 
 	 {
-          q->head = 0;
-     }
-     UNLOCK(q);
-     lua_pushstring(L, str);
-     free(str);
-     return 1;
+		  q->head = 0;
+	 }
+	 UNLOCK(q);
+	 lua_pushstring(L, str);
+	 free(str);
+	 return 1;
 }
 ```
 
