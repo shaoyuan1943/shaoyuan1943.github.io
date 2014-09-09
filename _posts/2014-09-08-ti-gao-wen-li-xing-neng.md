@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "cocos2d-x中提高性能的缓存解析"
-categories: cocos2dx
+categories: c++
 ---
 
 游戏最常见的就是动态加载纹理。但是动态加载纹理就意味着内存不断的分配销毁内存，纹理过多的话意味着内存占用就更高。一旦纹理比较多且加载不及时还会遇到某些纹理已经加载而某些纹理还没有加载（会在某个矩形区域内呈黑色）。纹理的加载与销毁都是需要时间与空间的，这对于游戏是一个挑战，因为游戏世界里是不断的在变化的。当然啦，这就需要程序员对程序的优化啦:)
@@ -124,41 +124,41 @@ void Scene::showImage()
             <key>stickman1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,0},{60,80}}</string>
+                <string>\{\{0,0\},\{60,80\}\}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>\{0,0\}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{60,80}}</string>
+                <string>\{\{0,0\},\{60,80\}\}</string>
                 <key>sourceSize</key>
-                <string>{60,80}</string>
+                <string>\{60,80\}</string>
             </dict>
             <key>stickman2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,80},{60,80}}</string>
+                <string>\{\{0,80\},\{60,80\}\}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>\{0,0\}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{60,80}}</string>
+                <string>\{\{0,0\},\{60,80\}\}</string>
                 <key>sourceSize</key>
-                <string>{60,80}</string>
+                <string>\{60,80\}</string>
             </dict>
             <key>stickman3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{0,160},{60,80}}</string>
+                <string>\{\{0,160\},\{60,80\}\}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>\{0,0\}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{60,80}}</string>
+                <string>\{\{0,0\},\{60,80\}\}</string>
                 <key>sourceSize</key>
-                <string>{60,80}</string>
+                <string>\{60,80\}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -168,7 +168,7 @@ void Scene::showImage()
             <key>realTextureFileName</key>
             <string>man.png</string>
             <key>size</key>
-            <string>{60,240}</string>
+            <string>\{60,240\}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:12e7183ac6818f625b15525e60ac4b63$</string>
             <key>textureFileName</key>
