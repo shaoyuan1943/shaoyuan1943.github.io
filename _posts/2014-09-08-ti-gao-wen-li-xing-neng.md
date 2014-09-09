@@ -15,7 +15,7 @@ TextureCache纹理缓存是最底层也是最有效的纹理缓存。它到底�
 auto sprite = Sprite::create("box.png");
 ```
 
-```Sprite::create("box.png")```调用了```Sprite::initWithFile("box.png")```,看下```initWithFile```的代码：  
+在```Sprite::create("box.png")```调用了```Sprite::initWithFile("box.png")```,看下```initWithFile```的代码：  
 
 ``` c++
 bool Sprite::initWithFile(const std::string& filename)
@@ -108,7 +108,7 @@ void Scene::showImage()
 这里有一个会影响游戏体验的建议就是资源加载，进度条加载资源。在游戏开始或者关卡开始前预先加载所有的资源。  
 
 ####```SpriteFrameCache```####
-```SpriteFrameCache```就是对```TextureCache```的封装，只不过它缓存的是精灵帧，即纹理指定区域的矩形块。而```TextureCache```缓存的是原始纹理图。```SpriteFrameCache```最常用的就是解析一张由N多小图拼成的大图，它会通过与大图一并生成的plist文件进行小图解析，缓存下指定区域的矩形块。有一张大图如下：  
+精灵帧缓存```SpriteFrameCache```就是对```TextureCache```的封装，只不过它缓存的是精灵帧，即纹理指定区域的矩形块。而```TextureCache```缓存的是原始纹理图。```SpriteFrameCache```最常用的就是解析一张由N多小图拼成的大图，它会通过与大图一并生成的plist文件进行小图解析，缓存下指定区域的矩形块。有一张大图如下：  
 
 ![alt text](/img/2014-09-09.png)  
 
@@ -178,7 +178,7 @@ void Scene::showImage()
 </plist>
 ```
 
-```SpriteFrameCache```会解析这个plist文件，进而知道大图里面每一张小图的位置和大小，这样就可以缓存相应的矩形。伪代码：  
+精灵帧缓存```SpriteFrameCache```会解析这个plist文件，进而知道大图里面每一张小图的位置和大小，这样就可以缓存相应的矩形。伪代码：  
 
 ``` c++
 // 使用SpriteFrameCache缓存
