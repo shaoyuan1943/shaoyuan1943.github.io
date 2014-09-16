@@ -11,12 +11,11 @@
 }
 
 body {
-  background-image: url(../img/skulls.png);
-  background-repeat: repeat;
+  background-color: white;
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 15px;
   text-align: center;
-  width: 80%;
+  width: 90%;
   max-width: 860px;
   margin: 0 auto;
 }
