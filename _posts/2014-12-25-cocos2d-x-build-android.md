@@ -13,11 +13,11 @@ categories: cocos2d-x
 
 只要把这几个配置好了编译过程基本没有问题，即使有问题也是很好找出来的。py脚本中大概有几个重要的函数，这里做下笔记：  
 1. get\_num\_of\_cpu()，获取当前机器上的CPU核心数。  
-2. check\_environmen\_variables_sdk()，检查ANDROID\_SDK\_ROOT这个环境变量是否可用。   
+2. check\_environmen\_variables\_sdk()，检查ANDROID\_SDK\_ROOT这个环境变量是否可用。   
 3. check\_environment\_variables()，检查 NDK\_ROOT这个环境变量是否可用。(我发现这两个名字取得很不明了)   
 4. select\_toolchain\_version()，获取toolchain的版本号。   
 5. copy\_files(src, dst)，拷贝文件。  
-6. copy\_resources(app_android_root)，拷贝资源文件。  
+6. copy\_resources(app\_android\_root)，拷贝资源文件。  
 7. build(ndk\_build\_param,android\_platform,build\_mode)，编译函数，这里调用do\_build()，真正的编译工作在do\_build里做。  
 
 Android.mk文件的配置
