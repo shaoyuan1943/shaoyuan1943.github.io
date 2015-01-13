@@ -42,3 +42,52 @@ Data =
 3. AlwaysOpen：说明此活动不受时间限制，数据固定常开活动。  
 4. payStart和payEnd决定充值区间，数据活动的规则部分。  
 5. propertyCount决定该充值活动的返还倍率。  
+
+通过上面的数据，我们可以按照顺序列出相应的步骤：  
+1. 循环遍历Data，找到一个可用的活动数据，返回给客户端。  
+2. 客户端收到活动数据后将字段进行组合，形成一个规则和内容都比较清晰的活动。  
+3. 玩家参加活动，然后开始充值。  
+4. 服务端在收到充值请求后，调用活动系统暴露出的接口，检查当前玩家是否能参加可用的活动。  
+5. 玩家能参加可用的充值活动后，根据上面的规则，检查充值金额是否满足要求。  
+6. 满足要求之后根据propertyCount计算出需要返还的金额返给玩家。  
+7. 日志记录，活动参加结束。  
+
+这样，一个活动的参加流程就结束了。由于我们的活动不仅支持在脚本中配置，还支持在web端进行配置，在web端的数据需要存储在数据库中，这样即可实现运营可以一次性配置数天数月甚至数年所需要的活动，保证条件就是运营将活动时间算好即可。流程如下：
+
+GM工具-->transit\_server-->game server-->DB
+
+由于脚本中也会配置一些活动，那么在启动服务器的时候，活动数据应该是怎么处理？具体处理方式如下：  
+1. 脚本优先于数据库启动，脚本中的活动会先生效。  
+2. 数据库启动后通知活动系统活动数据已取。  
+3. 每一种类型的活动对应一个key标识，活动系统在收到通知后会通过key设置所有的活动。  
+4. 从数据库取活动数据结束。  
+
+因此活动系统的设计应该是：  
+
+``` lua
+ActivityManager = {
+	["RoleFirstPayActivity"] 			= Import("zone_scripts/role_first_pay_activity.lua"),
+}; 
+
+function LoadActivity()
+	-- 从数据库加载数据
+end
+
+function GetActivityData(key)
+	-- 将活动数据返回给transi\_server，根据key区分类型
+end
+
+function SetActivityData(key, value)
+	-- 设置活动数据，根据key区分类型
+end 
+
+function SaveActivityData(key)
+	-- 保存活动数据，根据key区分类型
+end
+
+function GetActivityClientData(player)
+	-- 推送活动数据至玩家
+end
+```
+
+ActivityManager会以key加载所有的活动，而每种类型的活动会有一个相对应的脚本，其逻辑实现也在相应的脚本中。上面其实忽略一些细节方面的实现，比如中转服务器如何调用到游戏里来，中转服务器与游戏服务器的沟通以什么协议沟通（json）等，这些方面都会在后续的内容中说明。
