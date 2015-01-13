@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ""萌仙"系列之通用活动系统的设计与实现"
+title: "萌仙系列之通用活动系统的设计与实现"
 categories: cocos2d-x
 ---
 
