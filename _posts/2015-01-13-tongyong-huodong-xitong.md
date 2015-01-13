@@ -66,7 +66,7 @@ GM工具-->transit\_server-->game server-->DB
 
 ``` lua
 ActivityManager = {
-	["RoleFirstPayActivity"] 			= Import("zone_scripts/role_first_pay_activity.lua"),
+	["RoleFirstPayActivity"] = Import("zone_scripts/role_first_pay_activity.lua"),
 }; 
 
 function LoadActivity()
