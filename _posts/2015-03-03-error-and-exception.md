@@ -38,39 +38,3 @@ Bug是否属于错误呢？引Pongba的话：
 
 Bug属于程序员在编码期间人为造成的。但是这里应该分情况而定，如果```DoOtherthings()```属于第三方提供的函数，那么这里理应抛出异常作为错误处理，否则应该当场debug。所以程序不严谨导致的bug不是错误，即使因为这而给它做了异常处理，也需要考量一下，错误应该是程序无法规范的行为，而这里显然程序是可以规范的，bug应该被消灭在编码、review和QA阶段。
 
-###如何处理###
-> 严谨的错误处理要求不要忽视和放过任何一个错误，要么当即处理，要么转发给调用者，层层往上传播。任何被忽视的错误，都迟早会在代码接下去的执行流当中引发其他错误，这种被原始错误引发的二阶三阶错误可能看上去跟root cause一点关系都没有，造成bugfix的成本剧增，这是项目快速的开发步调下所承受不起的成本。
-
-错误是在程序发布之前不能忽视的。这意味着需要不断的仔细的检查代码与QA，力争做到解决全部错误，很遗憾，这点我们现在做不到。这是认为因素决定，一定人为影响因子降低，付出的代价将会在以后有更大的代价。
-
-检查错误意味着我们需要不断的review代码，这种“不断的”是需要付出时间与人力成本的，且在代码层面需要人为的处理与转发错误。这样造成的后果是代码膨胀与混乱。正如Pongba所言，使用异常来作为错误的处理机制。
-
-除了上面所提出的使用异常处理机制来处理错误，现实程序中还有另外一种处理错误的方式，错误码。这也就是萌仙C++代码中的使用方式。由于cocos2d-x中的FileUtils不够用，因此我们针对我们自己的文件系统重写设计了一个FileAssist类：  
-
-``` c++
-struct XFileAssist : XFileHelper
-{
-	virtual BOOL GetDirList(std::list<std::string>& dirList, const char szDir[], BOOL bRecursion = false, BOOL bRetRelativePath = false);
-	virtual BOOL GetFileList(std::list<std::string>& fileList, const char szDir[], BOOL bRecursion = false, BOOL bRetRelativePath = false);
-	virtual CODE ReadFileData(BYTE *pbOutput, size_t* puSize, const char szFileName[], size_t uExtSize = 0);
-	// other var...
-}
-```
-
-FileAssist类的设计中，表明了函数是否调用至理想结果以及对错误返回码的处理。```GetDirList```和```GetFileList```以返回值表明函数是否调用至理想结果。```ReadFileData```因为考虑在获取文件数据过程中，因为会对数据进行较多的处理，所以以返回码来标识函数的调用状态。但是有几个问题：  
-
-1. 函数的返回值被占用。  
-2. 以```GetDirList```为例，是以dirList还是以返回值作为成功依据？我想这会根据写代码的人不同而产生歧义，虽然这两种都可以作为成功依据。
-3. CODE有多个值，QA和review的人都需要知道CODE下每个值分别是什么意思？
-4. CODE是否会向调用方传递？调用方接收到CODE后是否会再向上一层调用方传递？每一层都需要传递处理，造成调用层次高耦合。
-5. 无论CODE返回什么东西，我们都无法忽略CODE。
-6. CODE能够承载的程序错误信息有限，万一出现CODE无法描述的情况怎么办？  
-
-
-以上的问题都是在程序过程中可能出现的问题，且可能会依赖代码的膨胀而膨胀。简而言之，我们需要对错误的处理方式是：  
-
-1. 函数签名足够简单，意义要明确。  
-2. 尽量少的嵌套与上层传递处理。
-3. 具有程序可恢复性，即使在无法恢复的时候可以获得更多的Error Info。
-
-
