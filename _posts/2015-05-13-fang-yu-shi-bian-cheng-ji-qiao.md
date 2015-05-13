@@ -36,7 +36,7 @@ categories: c++
 	}
 
 
-如果p其实已经被delete过，那么a代码将会出现内存访问异常，如不出意外，程序会abort。这在某些情况下是难以接受的，用户或许正在操作某种数据，一旦abort意味着用户数据将会丢失，损失是惨重的。有了try...catch语句之后，意味着一旦程序abort将会有一个专门的地方留给我们做善后操作，资源施放、数据落盘等。
+如果p已经被delete过，那么a代码将会出现内存访问异常，如不出意外，程序会abort。这在某些情况下是难以接受的，用户或许正在操作某种数据，一旦abort意味着用户数据将会丢失，损失是惨重的。有了try...catch语句之后，程序abort之前会有一个专门的地方留给我们做善后操作，资源施放、数据落盘等。
 
 说明：实际上对于p还有更好的处理。
 
@@ -105,6 +105,26 @@ categories: c++
 	#define CC_SAFE_DELETE(p) do { if(p) { delete (p); (p) = 0; } } while(0)
 
 
+也是采用了do...while手法。但是这种手法因人而已，总的来说，它是非常好的手段。这里的do...while有啥意义呢？  
+	
+	// a.
+	#define SAFE_DELETE(p) delete p; p = NULL;
+	if(nullptr != p) 
+		SAFE_DELETE(p)
+	else
+		// 想干嘛干嘛
+	
+	// b.
+	#define SAFE_DELETE(p) {delete p; p = NULL;}
+	if(nullptr != p) 
+		SAFE_DELETE(p);
+	else
+		// 想干嘛干嘛
+
+如果不使用用do...while，那么显然a代码无法通过编译，因为else无对应的if语句。b代码同样无法通过编译(加分号的习惯很严重:))。
+
+当然，每个block之前强制加上```{}```可以解决这个问题，这就是仁者见仁智者见智的问题了。
+
 话题回到Lua里来，脚本语言很灵活，但这种灵活的代价是易出错。游戏中Lua脚本的存在感非常强，归于其简单易扩展弹性高。
 
 	-- test.lua
@@ -124,24 +144,42 @@ categories: c++
 	-- test.lua
 	GlobalValue = GlobalValue or nil;
 
+再来聊聊经常用的for:  
 
-一旦try语句中出现任何异常，程序将会跳转至catch子句中，我们在catch子句中做代码上的善后处理，比如资源释放。
+	for k, v in pairs(task) do
+		-- 该干嘛干嘛	
+	end
 
-	// 1.
-	delete p;	// a
-	p = nullptr;	// b
+如果task为nil值呢？防御式编程的目的是将错误的影响减小，假设这里task为nil值是可允许出现的情况，那么for会在task为nil值的情况下出错，我们应该将影响减小至最低：  
 
-	// 2.
-	try
-	{
-		delete p;	// c
-		p = nullptr;
-	}
-	catch(Exception& e)
-	{
-		// 善后处理
-	}
+	for k, v in pairs(task or {}) do
+		-- 该干嘛干嘛	
+	end
 
-一旦p其实已经被delete过，那么a代码将会出现内存访问异常，如不出意外，程序会abort。这在某些情况下是难以接受的，用户或许正在操作某种数据，一旦abort意味着用户数据将会丢失，损失是惨重的。有了try...catch语句之后，意味着一旦程序abort将会有一个专门的地方留给我们做善后操作，资源施放、数据落盘等。
+在强类型语言（C++为例）中，NULL有时候被定义成0，那么你可以这样：  
 
-说明：实际上对于p还有更好的处理。 
+	int* p = NULL;
+	if(!p)
+	{}
+	
+	int i = 0;
+	if(!i)
+	{}
+
+这两者在某种情况下是等价的，但在Lua中不尽如此。在Lua的if中，nil与false等价，你这么写：  
+	
+	-- a.
+	if not false then
+	end
+
+	if not nil then
+	end
+	
+	-- b.
+	if not nil then
+	end
+	
+	if not 0 then
+	end
+
+上面a代码的效果一致，但b代码不尽如此。原因是因为nil与0不等价。所以对于nil与0的判断应该谨慎，别忘记了，防御的目的是扼杀错误和减小错误带来的影响。 
