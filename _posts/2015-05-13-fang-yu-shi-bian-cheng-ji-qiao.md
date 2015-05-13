@@ -40,6 +40,71 @@ categories: c++
 
 说明：实际上对于p还有更好的处理。
 
+在C++代码中，防御式的编程有更明显的体现，在很多开源库中都会见到不少的do...while的写法，cocos2d-x中对于do...while的使用非常多。do...while写法在防御式编程中也是一个常用的手段。
+
+	bool Fuck()
+	{
+		bool bRet = false;
+		int *pAssHole = new int;
+	
+		bRet = fuck1();
+		if(!bRet) 
+		{	
+			delete pAssHole;
+			return bRet;
+		}
+	
+		bRet = fuck2();
+		if(!bRet) 
+		{	
+			delete pAssHole;
+			return bRet;
+		}
+	
+		bRet = fuck3();
+		if(!bRet) 
+		{	
+			delete pAssHole;
+			return bRet;
+		}
+	}
+
+上面的代码冗余，非常不灵活，这样的代码往往隐藏着错误。如果我们采用do...while的写法：  
+
+	bool Fuck()
+	{
+		bool bRet = false;
+		int *pAssHole = new int;
+	
+		do
+		{
+			bRet = fuck1();
+			if(!bRet) 
+				break;
+		
+			bRet = fuck2();
+			if(!bRet) 
+				break;
+		
+			bRet = fuck3();
+			if(!bRet) 
+				break;
+		}while(0)
+	
+		delete pAssHole;
+	}
+
+我们明白do...while(0)肯定会执行一次，一旦某个if不成立，只需break跳出做其他处理即可。很大程序上减少代码冗余，提高程序健壮性。
+
+	Sprite* sprite = new Sprite;
+	CC_SAFE_DELETE(sprite);
+
+
+```CC_SAFE_DELETE```的实现：  
+
+	#define CC_SAFE_DELETE(p) do { if(p) { delete (p); (p) = 0; } } while(0)
+
+
 话题回到Lua里来，脚本语言很灵活，但这种灵活的代价是易出错。游戏中Lua脚本的存在感非常强，归于其简单易扩展弹性高。
 
 	-- test.lua
