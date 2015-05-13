@@ -100,12 +100,9 @@ categories: c++
 	CC_SAFE_DELETE(sprite);
 
 
-```CC_SAFE_DELETE```的实现：  
+来看看```CC_SAFE_DELETE```的实现：  
 
-
-``` c++
-#define CC_SAFE_DELETE(p) do { if(p) { delete (p); (p) = 0; } } while(0)
-```
+	#define CC_SAFE_DELETE(p) do { if(p) { delete (p); (p) = 0; } } while(0)
 
 
 话题回到Lua里来，脚本语言很灵活，但这种灵活的代价是易出错。游戏中Lua脚本的存在感非常强，归于其简单易扩展弹性高。
