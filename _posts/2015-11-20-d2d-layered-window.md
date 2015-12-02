@@ -28,116 +28,108 @@ D2D实现异形窗口。
 
 异形窗口一般都是以一张含有alpha通道的png图片作为背景，既然采用了D2D作为渲染，自然解析图片就采用WIC了。
 
-``` c++
-
-HRESULT LoadImageFile(IWICImagingFactory *pIWICFactory,
-						PCWSTR uri,
-						UINT destinationWidth,
-						UINT destinationHeight)
-{
-	HRESULT hRet = S_OK;
-
-	IWICBitmapDecoder		*pDecoder = nullptr;
-	IWICBitmapFrameDecode	*pSource = nullptr;
-	IWICStream				*pStream = nullptr;
-	IWICFormatConverter		*pConverter = nullptr;
-	IWICBitmapScaler		*pScaler = nullptr;
-
-	hRet = pIWICFactory->CreateDecoderFromFilename(uri, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
-	if (SUCCEEDED(hRet))
+	HRESULT LoadImageFile(IWICImagingFactory *pIWICFactory,
+							PCWSTR uri,
+							UINT destinationWidth,
+							UINT destinationHeight)
 	{
-		hRet = pDecoder->GetFrame(0, &pSource);
-	}
-
-	if (SUCCEEDED(hRet))
-	{
-		hRet = pIWICFactory->CreateFormatConverter(&pConverter);
-	}
-
-
-	UINT originalWidth, originalHeight;
-	hRet = pSource->GetSize(&originalWidth, &originalHeight);
-	if (SUCCEEDED(hRet))
-	{
-		if (destinationWidth != 0 && destinationHeight != 0)
-		{
-			originalWidth = destinationWidth;
-			originalHeight = destinationHeight;
-		}
-
-		hRet = pIWICFactory->CreateBitmapScaler(&pScaler);
+		HRESULT hRet = S_OK;
+	
+		IWICBitmapDecoder		*pDecoder = nullptr;
+		IWICBitmapFrameDecode	*pSource = nullptr;
+		IWICStream				*pStream = nullptr;
+		IWICFormatConverter		*pConverter = nullptr;
+		IWICBitmapScaler		*pScaler = nullptr;
+	
+		hRet = pIWICFactory->CreateDecoderFromFilename(uri, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
 		if (SUCCEEDED(hRet))
 		{
-			hRet = pScaler->Initialize(pSource, originalWidth, originalHeight, WICBitmapInterpolationModeCubic);
+			hRet = pDecoder->GetFrame(0, &pSource);
 		}
-
+	
 		if (SUCCEEDED(hRet))
 		{
-			hRet = pConverter->Initialize(pScaler, GUID_WICPixelFormat32bppPBGRA,
-				WICBitmapDitherTypeNone,
-				nullptr,
-				0.f,
-				WICBitmapPaletteTypeMedianCut);
+			hRet = pIWICFactory->CreateFormatConverter(&pConverter);
 		}
+	
+		UINT originalWidth, originalHeight;
+		hRet = pSource->GetSize(&originalWidth, &originalHeight);
+		if (SUCCEEDED(hRet))
+		{
+			if (destinationWidth != 0 && destinationHeight != 0)
+			{
+				originalWidth = destinationWidth;
+				originalHeight = destinationHeight;
+			}
+	
+			hRet = pIWICFactory->CreateBitmapScaler(&pScaler);
+			if (SUCCEEDED(hRet))
+			{
+				hRet = pScaler->Initialize(pSource, originalWidth, originalHeight, WICBitmapInterpolationModeCubic);
+			}
+	
+			if (SUCCEEDED(hRet))
+			{
+				hRet = pConverter->Initialize(pScaler, GUID_WICPixelFormat32bppPBGRA,
+					WICBitmapDitherTypeNone,
+					nullptr,
+					0.f,
+					WICBitmapPaletteTypeMedianCut);
+			}
+		}
+		if (SUCCEEDED(hRet))
+		{
+			hRet = dcRenderTarget->CreateBitmapFromWicBitmap(pConverter, nullptr, &gBitmap);
+		}
+	
+		if (SUCCEEDED(hRet))
+		{
+			hRet = pIWICFactory->CreateBitmapFromSource(pConverter, WICBitmapCacheOnLoad, &gWicBitmap);
+		}
+	
+		SAFE_RELEASE(pDecoder);
+		SAFE_RELEASE(pSource);
+		SAFE_RELEASE(pStream);
+		SAFE_RELEASE(pConverter);
+		SAFE_RELEASE(pScaler);
+	
+		return hRet;
 	}
-	if (SUCCEEDED(hRet))
-	{
-		hRet = dcRenderTarget->CreateBitmapFromWicBitmap(pConverter, nullptr, &gBitmap);
-	}
 
-	if (SUCCEEDED(hRet))
-	{
-		hRet = pIWICFactory->CreateBitmapFromSource(pConverter, WICBitmapCacheOnLoad, &gWicBitmap);
-	}
-
-	SAFE_RELEASE(pDecoder);
-	SAFE_RELEASE(pSource);
-	SAFE_RELEASE(pStream);
-	SAFE_RELEASE(pConverter);
-	SAFE_RELEASE(pScaler);
-
-	return hRet;
-}
-
-```
 
 当窗口响应WM_PAINT时：
 
-``` c++
-
-void Render2(HWND hwnd)
-{
-	RECT rc;
-	ZeroMemory(&rc, sizeof(rc));
-	RECT rcClient;
-	::GetWindowRect(hwnd, &rcClient);
-	SIZE wndSize = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
-	HDC hwndDC = GetDC(hwnd);
-
-	gDC = ::CreateCompatibleDC(hwndDC);
-	HBITMAP memBitmap = ::CreateCompatibleBitmap(hwndDC, wndSize.cx, wndSize.cy);
-	::SelectObject(gDC, memBitmap);
-	dcRenderTarget->BindDC(gDC, &rcClient);
-	dcRenderTarget->BeginDraw();
-	dcRenderTarget->DrawLine(D2D1::Point2F(200, 200), D2D1::Point2F(300, 300), gBrush, 50);
-	dcRenderTarget->DrawLine(D2D1::Point2F(100, 100), D2D1::Point2F(100, 300), gBrush, 50);
-	dcRenderTarget->DrawLine(D2D1::Point2F(0, 0), D2D1::Point2F(100, 600), gBrush);
-	dcRenderTarget->DrawBitmap(gBitmap, D2D1::RectF(0, 0, 68, 68), 1.0f);
-	dcRenderTarget->EndDraw();
-	POINT ptDest = { rcClient.left, rcClient.top };
-	POINT ptSrc = { 0, 0 };
-	SIZE szLayered = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
-	BLENDFUNCTION bf;
-	bf.AlphaFormat = AC_SRC_ALPHA;
-	bf.BlendFlags = 0;
-	bf.BlendOp = AC_SRC_OVER;
-	bf.SourceConstantAlpha = 255;
-	::UpdateLayeredWindow(hwnd, hwndDC, &ptDest, &szLayered, gDC, &ptSrc, RGB(0, 0, 0), &bf, ULW_ALPHA);
-	::ReleaseDC(nullptr, gDC);
-	::ReleaseDC(hwnd, hwndDC);
-}
-
-```
+	void Render2(HWND hwnd)
+	{
+		RECT rc;
+		ZeroMemory(&rc, sizeof(rc));
+		RECT rcClient;
+		::GetWindowRect(hwnd, &rcClient);
+		SIZE wndSize = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
+		HDC hwndDC = GetDC(hwnd);
+	
+		gDC = ::CreateCompatibleDC(hwndDC);
+		HBITMAP memBitmap = ::CreateCompatibleBitmap(hwndDC, wndSize.cx, wndSize.cy);
+		::SelectObject(gDC, memBitmap);
+		dcRenderTarget->BindDC(gDC, &rcClient);
+		dcRenderTarget->BeginDraw();
+		dcRenderTarget->DrawLine(D2D1::Point2F(200, 200), D2D1::Point2F(300, 300), gBrush, 50);
+		dcRenderTarget->DrawLine(D2D1::Point2F(100, 100), D2D1::Point2F(100, 300), gBrush, 50);
+		dcRenderTarget->DrawLine(D2D1::Point2F(0, 0), D2D1::Point2F(100, 600), gBrush);
+		dcRenderTarget->DrawBitmap(gBitmap, D2D1::RectF(0, 0, 68, 68), 1.0f);
+		dcRenderTarget->EndDraw();
+		POINT ptDest = { rcClient.left, rcClient.top };
+		POINT ptSrc = { 0, 0 };
+		SIZE szLayered = { rcClient.right - rcClient.left, rcClient.bottom - rcClient.top };
+		BLENDFUNCTION bf;
+		bf.AlphaFormat = AC_SRC_ALPHA;
+		bf.BlendFlags = 0;
+		bf.BlendOp = AC_SRC_OVER;
+		bf.SourceConstantAlpha = 255;
+		::UpdateLayeredWindow(hwnd, hwndDC, &ptDest, &szLayered, gDC, &ptSrc, RGB(0, 0, 0), &bf, ULW_ALPHA);
+		::ReleaseDC(nullptr, gDC);
+		::ReleaseDC(hwnd, hwndDC);
+	}
 
 至此变采用D2D完美实现了异形窗口，且暂无任何其他不良反应。最终实现代码仅有这么多，但是找到这种实现方式的过程却异常曲折，再此就不表了。
 
