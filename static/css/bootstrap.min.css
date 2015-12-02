@@ -1374,7 +1374,7 @@ pre {
 	line-height:1.42857143;
 	color:#333;
 	word-break:normal;
-	word-wrap:break-word;
+	word-wrap:normal;
 	background-color:#f5f5f5;
 	border:1px solid #ccc;
 	border-radius:4px
@@ -1383,7 +1383,7 @@ pre code {
 	padding:0;
 	font-size:inherit;
 	color:inherit;
-	white-space:pre-line;
+	white-space:normal;
 	background-color:transparent;
 	border-radius:0
 }
