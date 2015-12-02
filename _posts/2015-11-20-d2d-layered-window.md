@@ -2,7 +2,7 @@
 layout: post
 title: "FaceUI-Direct2D渲染异形窗口"
 date:   2015-11-20 00:00:00
-categories: C++
+categories: C
 excerpt: FaceUI-Direct2D渲染异形窗口
 ---
 
