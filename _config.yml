@@ -1,5 +1,0 @@
-name: Lennon Chen
-description: A bolg about Lennon's thoughts of programming and life. Happy that.:)
-markdown: redcarpet
-pygments: true
-permalink: /:year/:month/:title/
