@@ -28,7 +28,7 @@ D2D实现异形窗口。
 
 异形窗口一般都是以一张含有alpha通道的png图片作为背景，既然采用了D2D作为渲染，自然解析图片就采用WIC了。
 
-	HRESULT LoadImageFile(IWICImagingFactory *pIWICFactory,
+    HRESULT LoadImageFile(IWICImagingFactory *pIWICFactory,
 							PCWSTR uri,
 							UINT destinationWidth,
 							UINT destinationHeight)
@@ -44,7 +44,7 @@ D2D实现异形窗口。
 		hRet = pIWICFactory->CreateDecoderFromFilename(uri, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
 		if (SUCCEEDED(hRet))
 		{
-			hRet = pDecoder->GetFrame(0, &pSource);
+		  hRet = pDecoder->GetFrame(0, &pSource);
 		}
 	
 		if (SUCCEEDED(hRet))
@@ -131,7 +131,7 @@ D2D实现异形窗口。
 		::ReleaseDC(hwnd, hwndDC);
 	}
 
-至此变采用D2D完美实现了异形窗口，且暂无任何其他不良反应。最终实现代码仅有这么多，但是找到这种实现方式的过程却异常曲折，再此就不表了。 
+至此变采用D2D完美实现了异形窗口，且暂无任何其他不良反应。最终实现代码仅有这么多，但是找到这种实现方式的过程却异常曲折，再此就不表了。
 
 效果图一张：  
 ![alt text](/img/2015-11-21.png)  
