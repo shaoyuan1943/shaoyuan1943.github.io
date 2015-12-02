@@ -1384,6 +1384,7 @@ pre code {
 	font-size:inherit;
 	color:inherit;
 	white-space:inherit;
+	tab-size:4;
 	background-color:transparent;
 	border-radius:0
 }
