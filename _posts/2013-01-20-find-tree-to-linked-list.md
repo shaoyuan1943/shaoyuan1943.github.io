@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "关于二叉查找树转换成双向排序链表"
-date:2013-01-20 00:00:00
+date:   2013-01-20 00:00:00
 categories: Win32
 excerpt: 关于二叉查找树转换成双向排序链表
 ---
