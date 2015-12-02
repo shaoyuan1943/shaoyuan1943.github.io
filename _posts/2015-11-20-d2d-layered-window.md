@@ -2,8 +2,8 @@
 layout: post
 title: "FaceUI-Direct2D渲染异形窗口"
 date:   2015-11-20 00:00:00
-categories: CPlusPlus
-excerpt: 最近计划参照DuiLib重写为FaceUI
+categories: C++
+excerpt: FaceUI-Direct2D渲染异形窗口
 ---
 
 * content
