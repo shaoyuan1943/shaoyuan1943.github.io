@@ -1349,6 +1349,8 @@ code {
 	color:#c7254e;
 	background-color:#f9f2f4;
 	border-radius:4px;
+	word-break:normal;
+	word-wrap:normal;
 	tab-size:4
 }
 kbd {
@@ -1385,6 +1387,8 @@ pre code {
 	font-size:inherit;
 	color:inherit;
 	white-space:pre-line;
+	word-break:normal;
+	word-wrap:normal;
 	background-color:transparent;
 	border-radius:0
 }
