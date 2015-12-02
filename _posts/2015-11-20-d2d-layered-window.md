@@ -33,11 +33,11 @@ D2D实现异形窗口。
                           UINT destinationWidth,
                           UINT destinationHeight)
 	{ 
-      HRESULT hRet = S_OK;
+		HRESULT hRet = S_OK;
 	
-		   IWICBitmapDecoder		*pDecoder = nullptr;
-		  IWICBitmapFrameDecode	*pSource = nullptr;
-		  IWICStream				*pStream = nullptr;
+		IWICBitmapDecoder		*pDecoder = nullptr;
+		IWICBitmapFrameDecode	*pSource = nullptr;
+		IWICStream				*pStream = nullptr;
 		IWICFormatConverter		*pConverter = nullptr;
 		IWICBitmapScaler		*pScaler = nullptr;
 	
