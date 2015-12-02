@@ -28,7 +28,7 @@ D2D实现异形窗口。
 
 异形窗口一般都是以一张含有alpha通道的png图片作为背景，既然采用了D2D作为渲染，自然解析图片就采用WIC了。
 
-``` c++
+```c++
 
 HRESULT LoadImageFile(IWICImagingFactory *pIWICFactory,
 						PCWSTR uri,
