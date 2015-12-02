@@ -2,7 +2,7 @@
 layout: post
 title: "FaceUI-Direct2D渲染异形窗口"
 date:   2015-11-20 00:00:00
-categories: C
+categories: Win32
 excerpt: FaceUI-Direct2D渲染异形窗口
 ---
 
@@ -35,11 +35,11 @@ D2D实现异形窗口。
 	{ 
 		HRESULT hRet = S_OK;
 	
-		IWICBitmapDecoder		*pDecoder = nullptr;
-		IWICBitmapFrameDecode	*pSource = nullptr;
-		IWICStream				*pStream = nullptr;
+		IWICBitmapDecoder		*pDecoder  = nullptr;
+		IWICBitmapFrameDecode	*pSource   = nullptr;
+		IWICStream				*pStream   = nullptr;
 		IWICFormatConverter		*pConverter = nullptr;
-		IWICBitmapScaler		*pScaler = nullptr;
+		IWICBitmapScaler		*pScaler    = nullptr;
 	
 		hRet = pIWICFactory->CreateDecoderFromFilename(uri, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &pDecoder);
 		if (SUCCEEDED(hRet))
