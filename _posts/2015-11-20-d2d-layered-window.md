@@ -32,7 +32,7 @@ D2D实现异形窗口。
 							PCWSTR uri,
 							UINT destinationWidth,
 							UINT destinationHeight)
-	{
+	{ 
 		HRESULT hRet = S_OK;
 	
 		IWICBitmapDecoder		*pDecoder = nullptr;
