@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "STL中空间配置器探究(二)"
+date:   2013-04-22 00:00:00
 categories: Win32
 ---
 
