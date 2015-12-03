@@ -2,7 +2,7 @@
 layout: post
 title: "Redis数据存储"
 date:   2014-05-04
-categories: Lua
+categories: Game-Dev
 ---
 
 

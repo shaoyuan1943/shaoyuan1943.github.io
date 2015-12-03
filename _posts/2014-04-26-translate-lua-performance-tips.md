@@ -2,7 +2,7 @@
 layout: post
 title: "Lua Performance Tips"
 date:   2014-04-26
-categories: Lua
+categories: Game-Dev
 ---
 
 * content

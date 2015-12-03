@@ -2,7 +2,7 @@
 layout: post
 title: "记录ZoneCenter的一个bug"
 date:   2014-07-21
-categories: Lua
+categories: Game-Dev
 ---
 
 上周六外网环境上发现了一个bug导致用户无法登陆。经过查明是助战模块导致的问题。最后发现是一个```whilr true do```没有退出，伪代码如下：  

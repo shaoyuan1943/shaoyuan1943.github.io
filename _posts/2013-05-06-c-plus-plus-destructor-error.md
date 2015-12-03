@@ -2,7 +2,7 @@
 layout: post
 title: "构造函数与析构函数的坑"
 date: 2013-05-06 00:00:00
-categories: Win32
+categories: Program-Languages
 ---
 
 最近在某次代码中踩到了一个坑，这个坑比较隐蔽，发生问题的地方通常让人很难往那个地方想，因此我把它叫做C++中的容易踩进去的坑。  

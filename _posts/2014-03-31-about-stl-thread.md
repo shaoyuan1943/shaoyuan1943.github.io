@@ -2,7 +2,7 @@
 layout: post
 title: "std中的std::thread"
 date:   2014-03-31
-categories: Win32
+categories: Program-Languages
 ---
 
 C++11终于有了原生的thread了，我之前一直都是用的自己封装的```_beginthreadex```，在看了C++11的手册之后发现```std::thread```更加方便，而且还封装了```std::mutex```原子操作，看起来相当的方便。

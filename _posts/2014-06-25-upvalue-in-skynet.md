@@ -2,7 +2,7 @@
 layout: post
 title: "skynet中upvalue的用法"
 date:   2014-06-25
-categories: Lua
+categories: Game-Dev
 ---
 
 今天花了几十分钟看了一下skynet中的```lua-clientsocket.c```文件，其实在实际项目中，这一部分代码是需要重写的，所以也就大致看了一下流程。仔细看了这个文件中的```lreadline```，这个函数的实现比较巧妙，主要涉及到lua中的```upvalue```，之前还没有接触到```upvalue```，就当学习了一下```upvalue```的用法。

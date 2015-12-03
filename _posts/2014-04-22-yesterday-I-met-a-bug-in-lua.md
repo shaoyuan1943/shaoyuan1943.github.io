@@ -2,7 +2,7 @@
 layout: post
 title: "一个bug"
 data:   2014-04-22
-categories: Lua
+categories: Game-Dev
 ---
 
 昨天我们的游戏上app store了，当天晚上接到运营反馈的一个bug，说是没有积分系统的活动但是有的玩家在充值过程中送了积分。当时我脑海中第一感觉就是不可能，积分系统的活动压根就没有开怎么会有积分赠送呢。

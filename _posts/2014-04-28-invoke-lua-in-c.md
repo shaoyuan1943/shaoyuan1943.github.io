@@ -2,7 +2,7 @@
 layout: post
 title: "C++桥接Lua"
 date:   2014-04-28
-categories: Lua
+categories: Game-Dev
 ---
 
 
