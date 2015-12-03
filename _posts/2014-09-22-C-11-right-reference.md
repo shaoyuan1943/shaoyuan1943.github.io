@@ -2,7 +2,7 @@
 layout: post
 title: "C++11右值引用"
 date:   2014-09-22
-categories: Win32
+categories: Program-Languages
 ---
 
 * content

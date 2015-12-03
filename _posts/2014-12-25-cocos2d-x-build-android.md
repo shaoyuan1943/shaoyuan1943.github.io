@@ -2,7 +2,7 @@
 layout: post
 title: "cocos2d-x 3.x版本Android编译配置"
 date:   2014-12-25
-categories: Lua
+categories: Game-Dev
 ---
 
 3.x版本与2.x有很大的不同，这里暂且不谈代码层面上的变化，这里记录一下3.x版本在Android下的编译。2.x版本中，Android的编译是通过shell脚本进行的(build\_native.sh)，但是在3.x中修改成了python文件(build\_native.py)。我认为将3.x的编译脚本改成py可以说是cocos的有一大进步。sh配置方式太难以找错了，而脚本py方式很容易找错，通过查看代码可以知道编译经过几个步骤，每个步骤有哪些操作等。在便捷性和复杂度中间得到了平衡。

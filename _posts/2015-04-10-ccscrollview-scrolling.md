@@ -2,7 +2,7 @@
 layout: post
 title: "给CCScrollView添加滚动阻尼效果"
 date:   2015-04-10
-categories: Game Dev
+categories: Game-Dev
 ---
 
 最近我们在修改越南版本的UI，在新版本的UI上遇到两个一直未能解决问题。一是Home界面在滑动时很容易触摸到按钮，导致响应了按钮的事件。二是Home界面滑动太僵硬，没有流畅感。

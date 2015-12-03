@@ -2,7 +2,7 @@
 layout: post
 title: "手游优化"
 date:   2015-08-19
-categories: GameDev
+categories: Game-Dev
 ---
 
 * content

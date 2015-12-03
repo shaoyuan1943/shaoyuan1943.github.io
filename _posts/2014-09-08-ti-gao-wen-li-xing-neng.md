@@ -2,7 +2,7 @@
 layout: post
 title: "cocos2d-x中提高性能的缓存解析"
 date:   2014-09-08
-categories: Lua
+categories: Game-Dev
 ---
 
 * content
