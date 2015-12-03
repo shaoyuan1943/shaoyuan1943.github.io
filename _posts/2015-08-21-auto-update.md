@@ -2,7 +2,7 @@
 layout: post
 title: "重构更新机制"
 date:   2015-08-21
-categories: GameDev
+categories: Game-Dev
 ---
 
 * content
