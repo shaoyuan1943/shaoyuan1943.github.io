@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "昨天遇到的一个bug"
+title: "一个bug"
 data:   2014-04-22
 categories: Lua
 ---
