@@ -2,7 +2,7 @@
 layout: post
 title: "DuiLib中事件分开处理的一个方法"
 date:   2014-07-11
-categories: Program-Languages
+categories: Win32-UI-Dev
 ---
 
 这两天帮一个童鞋做PC客户端的界面，这个童鞋对客户端界面不太熟悉，又想快点搞定。于是我就想到了用DuiLib帮他做。

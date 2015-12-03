@@ -2,7 +2,7 @@
 layout: post
 title: "duilib里的消息流转"
 date:   2013-12-15
-categories: Program-Languages
+categories: Win32-UI-Dev
 ---
 
 Duilib中比较重要的一个方面就是窗口消息的流转，首先我们不谈渲染引擎。只针对三个类```CWindowWnd，WindowImplBase，CPaintManagerUI```。

@@ -2,7 +2,7 @@
 layout: post
 title: "duilib里的内存回收"
 date:   2013-12-11
-categories: Program-Languages
+categories: Win32-UI-Dev
 ---
 
 我们的刺猬助手客户端的界面是用Duilib写的，前天在调试代码的时候发现一个问题，在关闭应用程序的时候发现程序崩溃了，原因一想便得知，肯定是哪里的指针重复释放了。在跟踪到主窗口的析构函数中，中断到了这样的一句代码：  
