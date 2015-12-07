@@ -2,7 +2,7 @@
 layout: post
 title: "一代宗师：缅怀那个时代传统武术文化下的人、事和感情"
 date:   2013-03-29 00:00:00
-categories: 杂文
+categories: 影像
 excerpt: 一代宗师：缅怀那个时代传统武术文化下的人、事和感情
 ---
 
