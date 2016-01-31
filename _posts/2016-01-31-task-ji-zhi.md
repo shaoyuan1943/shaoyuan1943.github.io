@@ -28,6 +28,7 @@ categories: Program-Languages
     
     class Task
     {
+      friend class TaskMgr;
     public:
       typedef std::function<void ()>  Closure;
       Task(Closure callback)
