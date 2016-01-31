@@ -30,17 +30,17 @@ categories: Program-Languages
     {
     public:
       typedef std::function<void ()>  Closure;
-    	Task(Closure callback)
-    	{
-    	  excute_ = callback;
-    	}
+      Task(Closure callback)
+      {
+        excute_ = callback;
+      }
     private:
-    	void Run()
-    	{
-    	  excute_();
-    	}
+      void Run()
+      {
+        excute_();
+      }
     private:
-    	Closure excute_;
+      Closure excute_;
     };
 
 有了Task之后，我们需要一个管理器来管理很多Task，所以理论上这个管理器应该被设计成Singelton。这个管理器有一个Task列表，不断轮询这个列表，一旦发现列表不为空就立即执行任务。当这个管理器退出时，需要在当前任务执行完成后清空列表，最后停止线程。对于这个管理器，我们设计的接口类似这样：  
@@ -70,62 +70,61 @@ categories: Program-Languages
     public:
       TaskMgr()
       {
-    	  taskThread_ = new std::thread(std::bind(&TaskMgr::Run, this));
+        taskThread_ = new std::thread(std::bind(&TaskMgr::Run, this));
       }
     
       ~TaskMgr()
       {
-    	  delete taskThread_;
-    	  taskThread_ = nullptr;
+        delete taskThread_;
+        taskThread_ = nullptr;
       }
     
       void Post(Task *task)
       {
-    	  tasks_.push_back(task);
-    	  // 如果当前thread处于sleep状态应该Resume
+        tasks_.push_back(task);
+        // 如果当前thread处于sleep状态应该Resume
       }
     
       void Run()
-    	{
-    	  while (true)
-    	  {
-    		  if (tasks_.size() > 0 && taskThread_)
-    		  {
-    			  auto task = tasks_.front();
-    			  if (task)
-    			  {
-    				  task->Run();
-    			  }
-    		  }
-    
-    		// 无任务时sleep
-    	  }
+      {
+        while (true)
+        {
+          if (tasks_.size() > 0 && taskThread_)
+          {
+            auto task = tasks_.front();
+            if (task)
+            {
+              task->Run();
+            }
+          }
+        // 无任务时sleep
+        }
       }
         
       // 等待任务执行完毕时退出
-    	void ExitWait()
+      void ExitWait()
       {
         if (taskThread_->joinable())
-    	  {
-    		  taskThread_->join();
-    	  }
+        {
+          taskThread_->join();
+        }
       }
     
       void ExitWithIgnoreTasks()
       {
-    	  Sleep();
-    	  // 清除front之后的未执行task
-    	  Resume();
+        Sleep();
+        // 清除front之后的未执行task
+        Resume();
       }
     
       void Sleep()
       {
-    	  // 睡眠
+        // 睡眠
       }
     
       void Resume()
       {
-    	  // 唤醒thread
+        // 唤醒thread
       }
     private:
       std::thread *taskThread_;
