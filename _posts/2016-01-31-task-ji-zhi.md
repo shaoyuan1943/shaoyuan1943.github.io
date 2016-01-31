@@ -29,15 +29,15 @@ categories: Program-Languages
     class Task
     {
     public:
-        typedef std::function<void ()>	Closure;
+      typedef std::function<void ()>  Closure;
     	Task(Closure callback)
     	{
-    		excute_ = callback;
+    	  excute_ = callback;
     	}
     private:
     	void Run()
     	{
-    		excute_();
+    	  excute_();
     	}
     private:
     	Closure excute_;
@@ -48,7 +48,7 @@ categories: Program-Languages
     class TaskMgr
     {
     private:
-        void Run();
+      void Run();
     public:
     	TaskMgr();
     	~TaskMgr();
