@@ -50,17 +50,17 @@ categories: Program-Languages
     private:
       void Run();
     public:
-    	TaskMgr();
-    	~TaskMgr();
+      TaskMgr();
+      ~TaskMgr();
     
-    	void Post(Task *task);
-    	void ExitWait();
-    	void ExitWithIgnoreTasks();
-    	void Sleep();
-    	void Resume();
+      void Post(Task *task);
+      void ExitWait();
+      void ExitWithIgnoreTasks();
+      void Sleep();
+      void Resume();
     private:
-    	std::thread *taskThread_;
-    	std::list<Task*> tasks_;
+      std::thread *taskThread_;
+      std::list<Task*> tasks_;
     };
 
 该有的都有了，对于这个管理器，我们一共有5个对外接口，Task则没有对外接口，较好的控制了用户的使用规范了代码，公开的接口都是用户可执行的接口。下面是实现了：
@@ -68,68 +68,68 @@ categories: Program-Languages
     class TaskMgr
     {
     public:
-    	TaskMgr()
-    	{
-    		taskThread_ = new std::thread(std::bind(&TaskMgr::Run, this));
-    	}
+      TaskMgr()
+      {
+    	  taskThread_ = new std::thread(std::bind(&TaskMgr::Run, this));
+      }
     
-    	~TaskMgr()
-    	{
-    		delete taskThread_;
-    		taskThread_ = nullptr;
-    	}
+      ~TaskMgr()
+      {
+    	  delete taskThread_;
+    	  taskThread_ = nullptr;
+      }
     
-    	void Post(Task *task)
-    	{
-    		tasks_.push_back(task);
-    		// 如果当前thread处于sleep状态应该Resume
-    	}
+      void Post(Task *task)
+      {
+    	  tasks_.push_back(task);
+    	  // 如果当前thread处于sleep状态应该Resume
+      }
     
-    	void Run()
+      void Run()
     	{
-    		while (true)
-    		{
-    			if (tasks_.size() > 0 && taskThread_)
-    			{
-    				auto task = tasks_.front();
-    				if (task)
-    				{
-    					task->Run();
-    				}
-    			}
+    	  while (true)
+    	  {
+    		  if (tasks_.size() > 0 && taskThread_)
+    		  {
+    			  auto task = tasks_.front();
+    			  if (task)
+    			  {
+    				  task->Run();
+    			  }
+    		  }
     
-    			// 无任务时sleep
-    		}
-    	}
+    		// 无任务时sleep
+    	  }
+      }
         
-        // 等待任务执行完毕时退出
+      // 等待任务执行完毕时退出
     	void ExitWait()
-    	{
-    		if (taskThread_->joinable())
-    		{
-    			taskThread_->join();
-    		}
-    	}
+      {
+        if (taskThread_->joinable())
+    	  {
+    		  taskThread_->join();
+    	  }
+      }
     
-    	void ExitWithIgnoreTasks()
-    	{
-    		Sleep();
-    		// 清除front之后的未执行task
-    		Resume();
-    	}
+      void ExitWithIgnoreTasks()
+      {
+    	  Sleep();
+    	  // 清除front之后的未执行task
+    	  Resume();
+      }
     
-    	void Sleep()
-    	{
-    		// 睡眠
-    	}
+      void Sleep()
+      {
+    	  // 睡眠
+      }
     
-    	void Resume()
-    	{
-    		// 唤醒thread
-    	}
+      void Resume()
+      {
+    	  // 唤醒thread
+      }
     private:
-    	std::thread *taskThread_;
-    	std::list<Task*> tasks_;
+      std::thread *taskThread_;
+      std::list<Task*> tasks_;
     };
 
 当然，上面的代码并不完善，并没有考虑到Task需要参数/变量之间需要控制竞争等情况。上面的代码只是抛砖引玉，分享一下对于Task机制的经验。其实对于Task需要参数这个问题采用模块特化即可解决，而变量竞争这采用合适的锁即可。对于Task机制，可以看下Chromium的开源代码，其中对于Task机制有一个非常完善且漂亮的实现。
