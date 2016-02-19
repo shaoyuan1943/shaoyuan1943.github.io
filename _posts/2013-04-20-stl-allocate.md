@@ -8,6 +8,8 @@ categories: Program-Languages
 * content
 {:toc}
 
+#### 前言
+
 总所周知，vector是线性容器而且内部动态空间分配，可以随着元素的增加内部自动配置空间。对于其vector内部如何实现自行扩充空间和“配置新空间-数据移动-释放就空间”的了解还是比较重要，当然这样对于STL这样的高效工具是必须要了解的。  
 
 STL有几个版本，本来想直接阅读VS2010中的源代码的，但是发现VS2010中STL的代码实现可阅读程度不是很高(当然，看个人感觉)，阅读起来也不舒服，而且源文件找起来也相对麻烦，和linux下的STL版本好多文件名都修改了。正好手上有SGI版本的STL，可阅读程度比较高，就选择SGI版本的STL阅读，其实几个版本的STL实现实际也都是大同小异，一通全通，大概也就是这个理儿。有些许地方会将VC的STL版本和SGI的STL版本比对，会在文中指出的。  
@@ -105,7 +107,7 @@ STL有几个版本，本来想直接阅读VS2010中的源代码的，但是发�
 
 STL在内存分配上采用的是两层配置，当所需要内存大于128字节时，就采用第一层配置，当所需的内存较小时，就采用第二层配置，从内存池中取出内存返回给所需要存的“客户”。这样的精细分工节约内存防止碎片产生。麻烦就在两层配置上，比较难以理解，不过阅读源码将这两层配置一层一层撕开就明白了。  
 
-####第一层内存配置器：__malloc_alloc_template  
+#### 第一层内存配置器：__malloc_alloc_template  
 
 __malloc_alloc_template比较简单，主要是分配了相当数量大小的内存，源码：  
 
@@ -154,7 +156,7 @@ __malloc_alloc_template比较简单，主要是分配了相当数量大小的内
 
 可以看到，内存分配与释放时在allocate和deallocate中进行的，在这两个函数里使用的C中的malloc和free，reallocate也是使用的C中的realloc函数。只有当malloc或者realloc失败了，然后就会转换身去调用补救函数，也就是_S_oom_malloc或者_S_oom_realloc。  
 
-####第二层配置器：__default_alloc_template  
+#### 第二层配置器：__default_alloc_template  
 
     template <bool threads, int inst>  
     class __default_alloc_template 

@@ -5,9 +5,10 @@ date:   2014-04-28
 categories: Game-Dev
 ---
 
-
 * content
 {:toc}
+
+#### 前言
 
 现在开始用lua写游戏相关的东西了，之前我只用过C++和JS，lua也算是现学现用了，具体时间算下来约莫使用lua两个月左右了吧。
 
@@ -25,8 +26,10 @@ lua里有全局变量的概念，不用local修饰的变量在lua中都被认为
 1、```lua_State* Lua = luaL_newstate();```新建一个lua虚拟机，即初始化lua的运行环境。  
 2、```luaL_openlibs(Lua);```加载lua标准库。  
 3、```luaL_dofile(Lua, "Test.lua");```加载lua脚本文件。
-上面两行就完成了lua环境的初始化，接下来就可以做各种交互操作了。  
-####lua调用C++函数
+上面两行就完成了lua环境的初始化，接下来就可以做各种交互操作了。 
+ 
+#### lua调用C++函数
+
 1、首先得让lua知道C++的函数，向lua注册一个函数，内部实现是以函数指针的形式：  
 
     lua_register(Lua, "CPlusPlus_Add", CPlusPlus_Add);
@@ -85,7 +88,9 @@ lua脚本中：
     lua_pop(Lua, 1);					//清栈
     std::cout << "result = " << result << endl;
 
-####获取lua中table的元素
+
+#### 获取lua中table的元素
+
 这个比较简单的，看代码：  
 
     // 获取lua中表的元素
@@ -111,7 +116,9 @@ lua脚本中：
     	lua_pop(Lua, -1);
     }
 
-####lua调用C++类
+
+#### lua调用C++类
+
 1、往lua中注册函数指针，并告诉lua该函数有几个参数，几个返回值。  
 2、在lua中调用C/C++注册的函数。  
 3、在C/C++的函数中，从栈中依次弹出参数，然后进行数据处理，最后将返回值压入栈。  
@@ -223,7 +230,9 @@ lua中可以这样使用：
     	return sum;
     end
 
-####使用tolua++
+
+#### 使用tolua++
+
 其实使用上面的办法暴露C++类给lua还是略显麻烦，一旦项目中大量使用lua写逻辑的话，这种方式不仅麻烦而且容易出错，幸好我们有tolua++第三方库。获取tolua++的源代码，编译出dll和lib，加入自己的项目中，然后通过pkg文件生成与lua的绑定文件。我们有这样一个C++类：
 
     #ifndef _HELLO_H_
@@ -285,7 +294,9 @@ lua中可以这样使用：
     	return 0;
     }
 
-####环境配置
+
+#### 环境配置
+
 如果不使用tolua++的话，环境就比较好配置了，加载lua的lib，然后包含头文件就可以了。  
 
     extern "C"
