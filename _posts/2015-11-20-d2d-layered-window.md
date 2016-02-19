@@ -6,6 +6,9 @@ categories: Win32-UI-Dev
 excerpt: FaceUI-Direct2D渲染异形窗口
 ---
 
+* content
+{:toc}
+
 #### 前言
 最近计划参照DuiLib重写为FaceUI，以解决DuiLib中诸多不爽的问题。FaceUI中将利用C++11实现更加完善方便的UI事件机制，同时采用TinyXML作为XML解析器，将重要工作交付给更加快速稳定的第三方库。至于渲染引擎方面，DuiLib为了兼容XP采用了GDI（GDI+的效率问题使得不在本文的讨论范围之内）使得没办法实现更漂亮的UI，由于GDI不含alpha通道无法原生实现异形窗口，即使修改DuiLib实现异形会造成其他绘制操作不含alpha操作导致绘图出现“穿透”。
 
