@@ -28,4 +28,4 @@ categories: Android-iOS
 * libAacEncoder.so:源自FAAC库。
 * libVoAACEncoder.so:源自AOSP 2.3 libstagefright内的AAC编码器。
 
-###其中使用范例和库文件在[**这里**](https://github.com/shaoyuan1943/AndroidRecordAAC)
+### 其中使用范例和库文件在[**这里**](https://github.com/shaoyuan1943/AndroidRecordAAC)
