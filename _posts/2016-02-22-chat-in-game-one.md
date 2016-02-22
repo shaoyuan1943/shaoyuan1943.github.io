@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Android上录制AAC格式音频"
-date:   2016-02-23
-categories: Game-Dev
+date:   2016-02-21
+categories: Android-iOS
 ---
 
 最近在重新设计游戏内的聊天系统，要求支持文字/语音聊天和多频道聊天，其中重点是支持语音聊天。所以这几天的时间都是在做模块设计和技术预研。对于支持语音聊天，涉及到Android和iOS两大平台，所以就先研究这两大平台上通用的音频交互格式。
