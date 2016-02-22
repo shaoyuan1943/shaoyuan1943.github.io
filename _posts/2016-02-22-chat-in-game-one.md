@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Android上录制AAC格式音频"
-date:   2016-02-21
+date:   2016-02-22
 categories: Android-iOS
 ---
 
