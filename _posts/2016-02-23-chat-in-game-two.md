@@ -22,4 +22,4 @@ categories: Android-iOS
 
 接下来开始进入具体的模块设计了。。
   
-### 其中使用范例在[**这里**](https://github.com/shaoyuan1943/iOSRecordAAC)
+### 其中使用范例在[**这里**](https://github.com/shaoyuan1943/iOSRecordAAC.git)
