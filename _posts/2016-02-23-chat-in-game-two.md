@@ -21,5 +21,5 @@ categories: Android-iOS
 目前Android上测试了几部高端机器，表现均在预料范围内，iOS设备测试了iTouch 5 和iPhone 5，表现都还不错。现在唯一有点担心的是Android略微低端的机器是否可以正常录制和播放AAC，还有一些ROM改动比较大的机器，比如MIUI，Flyme等，不确定运行这些ROM机器是否可以正常录制，有空了再做一次全面的测试。
 
 接下来开始进入具体的模块设计了。
-
+  
 ### 其中使用范例在[**这里**](https://github.com/shaoyuan1943/iOSRecordAAC)
