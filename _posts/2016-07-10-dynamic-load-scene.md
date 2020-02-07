@@ -2,7 +2,7 @@
 layout: post
 title: "游戏场景分段动态加载"
 date:   2016-07-10
-categories: Unity-Shader
+categories: Game-Dev
 ---
 
 Unity游戏中，有着各种“动态”优化手段。以往大家对于场景的优化采用loading异步加载，一次性将场景的全部内容都加载出来。虽说在摄像机之外的内容会自动剔除，但场景内的元素依旧存在内存中，且loading时间过程对玩家的体验也就一般，前几天想到对场景的另外一种优化手段：场景分段加载。

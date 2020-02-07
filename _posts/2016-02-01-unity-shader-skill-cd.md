@@ -2,7 +2,7 @@
 layout: post
 title: "Unity.Image实现技能冷却遮罩效果"
 date:   2016-01-31
-categories: Unity-Shader
+categories: Game-Dev
 ---
 
 前几日听到另外一个项目组在讨论实现技能冷却的遮罩效果，UE那边想要这样的效果：  

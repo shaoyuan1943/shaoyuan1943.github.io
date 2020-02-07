@@ -2,7 +2,7 @@
 layout: post
 title: "减少Coroutine带来的GC开销"
 date:   2016-08-05
-categories: Unity-Shader
+categories: Game-Dev
 ---
 
 游戏里面对于异步的处理经常会用到Coroutine，很多时候Coroutine并不是一次处理或一帧内处理完毕，所以经常会用到```yield return```：  
