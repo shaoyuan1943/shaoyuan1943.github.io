@@ -2,7 +2,7 @@
 layout: post
 title: "程序员的职业素养"
 date:   2014-06-24
-categories: 思绪
+categories: 思考
 ---
 
 * content
