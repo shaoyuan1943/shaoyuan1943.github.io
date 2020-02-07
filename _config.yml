@@ -28,3 +28,12 @@ paginate_path: "page:num"
 # highlighter: pygments
 # highlighter: rouge
 # highlighter: false
+
+# gitment
+gitment:
+  enable: true
+  githubID: shaoyuan1943
+  repo: http://shaoyuan1943.github.io/
+  ClientID: "70812db7a48ce6d4e728"
+  ClientSecret: "a38a3c54bb3957c0bf74bd52e9fba2e91e938bb8"
+  lazy: true
