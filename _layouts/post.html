@@ -15,23 +15,6 @@ layout: default
       <hr>
     </div>
     <div class="post-area post comment">
-      {% if site.gitment.repo %}
-        <div id="gitmentContainer"></div>
-        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-        <script>
-            var gitment = new Gitment({
-                id: '<%= page.date %>',
-                owner: '{{site.gitment.githubID}}',
-                repo: '{{site.gitment.repo}}',
-                oauth: {
-                    client_id: '{{site.gitment.ClientID}}',
-                    client_secret: '{{site.gitment.ClientSecret}}',
-                },
-            });
-            gitment.render('gitmentContainer')
-        </script>
-        {% endif %}
     </div>
   </div>
 
