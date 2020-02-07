@@ -17,18 +17,18 @@ layout: default
       <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
     </div>
     <div class="post-area post comment">
-      {% if site.comment_gitment_repo %}
+      {% if site.gitment.repo %}
         <div id="gitmentContainer"></div>
         <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
         <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
         <script>
             var gitment = new Gitment({
                 id: '<%= page.date %>',
-                owner: '{{site.github_username}}',
-                repo: '{{site.comment_gitment_repo}}',
+                owner: '{{site.gitment.githubID}}',
+                repo: '{{site.gitment.repo}}',
                 oauth: {
-                    client_id: '{{site.comment_gitment_clientId}}',
-                    client_secret: '{{site.comment_gitment_clientSecret}}',
+                    client_id: '{{site.gitment.ClientID}}',
+                    client_secret: '{{site.gitment.ClientSecret}}',
                 },
             });
             gitment.render('gitmentContainer')
