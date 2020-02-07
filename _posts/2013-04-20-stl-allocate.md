@@ -2,7 +2,7 @@
 layout: post
 title: "STL中空间配置器探究(一)"
 date:   2013-04-20 00:00:00
-categories: Program-Languages
+categories: C++
 ---
 
 * content

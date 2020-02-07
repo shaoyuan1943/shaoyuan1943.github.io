@@ -2,7 +2,7 @@
 layout: post
 title: "C++17特性详解1--auto对于列表初始化的新规则"
 date: 2017-07-19
-categories: Program-Languages
+categories: C++
 ---
 
 自从C++11引入```{}```这种通用列表初始化方式之后，截止到C++17，C++中共有七种对象[初始化方式](http://en.cppreference.com/w/cpp/language/initialization)。C++11中重新解释了auto关键字作为类型推导，于是在C++17版本中，对于这些初始化方式在auto关键字下如何运作的有了新的规则：[New rules for auto with braced-init-lists](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3922.html)。

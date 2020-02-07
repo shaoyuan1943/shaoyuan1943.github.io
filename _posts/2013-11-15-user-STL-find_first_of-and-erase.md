@@ -2,7 +2,7 @@
 layout: post
 title: "STL中可能误用的 find\_first\_of 和 earse "
 date:   2013-11-15
-categories: Program-Languages
+categories: C++
 ---
 
 * content

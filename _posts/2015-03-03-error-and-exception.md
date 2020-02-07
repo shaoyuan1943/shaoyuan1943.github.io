@@ -2,7 +2,7 @@
 layout: post
 title: "C++中的错误与异常处理"
 date:   2015-03-03
-categories: Program-Languages
+categories: C++
 ---
 
 * content

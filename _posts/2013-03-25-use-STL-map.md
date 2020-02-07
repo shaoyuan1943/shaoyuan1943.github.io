@@ -2,7 +2,7 @@
 layout: post
 title: "使用std::map发现的一个容易忽略的小问题"
 date:   2013-03-25 00:00:00
-categories: Program-Languages
+categories: C++
 excerpt: 使用std::map发现的一个容易忽略的小问题
 ---
 

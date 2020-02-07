@@ -2,7 +2,7 @@
 layout: post
 title: "STL中空间配置器探究(二)"
 date:   2013-04-22 00:00:00
-categories: Program-Languages
+categories: C++
 ---
 
 在allocate函数中，当```malloc_alloc::allocate```分配失败后，就转向调用_S_refill。_S_refill函数的源代码：  

@@ -2,7 +2,7 @@
 layout: post
 title: "chromium里的weak_ptr"
 date:   2013-12-16
-categories: Program-Languages
+categories: C++
 ---
 
 weakptr的实现最底层的东西就是```scoped_refptr```目标文件```/src/base/memory/weak_ptr.h```。WeakPtr主要是有如下的几个类构成：  

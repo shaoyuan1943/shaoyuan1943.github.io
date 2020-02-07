@@ -2,7 +2,7 @@
 layout: post
 title: "详解C++11中移动语义(std::move)和完美转发(std::forward)"
 date:   2016-03-26
-categories: Program-Languages
+categories: C++
 ---
 
 * content

@@ -2,7 +2,7 @@
 layout: post
 title: "关于STL中string的一些使用感受"
 date:   2013-11-01
-categories: Program-Languages
+categories: C++
 ---
 
 最近写的刺猬苹果助手已经发布了，慢慢的已经有一些开始使用了，大家如果感兴趣可以私信我发客户端你们使用。这个客户端是duilib下写的，其中用到的字符串主要还是STL中的string和wstring，虽然duilib中自带了CStdString，但是在阅读CStdString源代码的过程中发现CStdString的实现略微有些不当，在使用过程中也是不甚方便。  
